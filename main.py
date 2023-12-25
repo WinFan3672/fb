@@ -1,7 +1,7 @@
 import os
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Header, Footer, Static, DirectoryTree, Label, Input
-from textual.containers import Horizontal, Vertical, Middle
+from textual.containers import Horizontal, Vertical, Middle, Center
 from textual.reactive import reactive
 from textual.widget import Widget
 
@@ -15,7 +15,7 @@ class MessageBox(Static):
         super().__init__()
         self.message = message
     def compose(self):
-        yield Middle(Label(self.message), Button("OK", variant="success"))
+        yield Center(Label(self.message), Button("OK", variant="success"))
     def on_button_pressed(self, event):
         self.remove()  # Remove the Middle container (and its children)
 
@@ -71,7 +71,9 @@ class MainApp(App):
 
     def action_help(self) -> None:
         msg = "\n".join([
-            "TEST",
+            "fb 0.1.0",
+            "(c) 2023-2024 WinFan3672, some rights reserved.",
+            "Licensed under GNU GPL version 2.0.",
             ])
         self.mount(MessageBox(msg))
 
