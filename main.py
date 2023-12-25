@@ -1,22 +1,23 @@
 import os
 from textual.app import App, ComposeResult
-from textual.widgets import Button, Header, Footer, Static, DirectoryTree, Label
-from textual.containers import ScrollableContainer, Horizontal
-import sys
+from textual.widgets import Button, Header, Footer, Static, DirectoryTree, Label, Input
+from textual.containers import Horizontal
 
 STARTDIR = os.path.expanduser("~")
 
 class LeftPanel(Static):
     def compose(self) -> ComposeResult:
-        yield Label("This is pre-release software; missing features and bugs may occur.")
-
+        yield Label("This is pre-release software; expect missing features and bugs.")
+class FilterBox(Static):
+    def compose(self) -> ComposeResult:
+        yield Input("Filter...", id="filterBox")
+        yield Button("Go", id="goButton")
 class MainApp(App):
     TITLE = "File Browser"
     '''A file explorer written in Textual.'''
     CSS_PATH = "app.css"
     BINDINGS = [
             ('/', 'filter', 'Filter'),
-            ('d', 'toggle_dark', 'Dark Mode'),
             ('?', 'help', 'Help'),
             ('q', 'quit', 'Quit'),
             ]
@@ -26,14 +27,12 @@ class MainApp(App):
         yield Footer()
         yield LeftPanel()
         yield Horizontal(DirectoryTree(STARTDIR), DirectoryTree(STARTDIR))
-    def action_toggle_dark(self) -> None:
-        self.dark = not self.dark
 
     def action_quit(self) -> None:
-        sys.exit()
+        self.exit()
     
     def action_filter(self) -> None:
-        pass
+        self.mount(FilterBox())
 
     def action_help(self) -> None:
         pass

@@ -4,5 +4,17 @@ Screen {
 
 LeftPanel {
 	color: red;
+	text-align: center;
 }
 
+FilterBox {
+    layout: horizontal;
+    background: $boost;
+    height: 5;
+    margin: 1;
+    padding: 1;
+}
+
+Button {
+	width: 16;
+}
