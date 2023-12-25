@@ -4,7 +4,7 @@ from textual.widgets import Button, Header, Footer, Static, DirectoryTree, Label
 from textual.containers import ScrollableContainer, Horizontal
 import sys
 
-STARTDIR = "/home/winfan3672"
+STARTDIR = os.path.expanduser("~")
 
 class LeftPanel(Static):
     def compose(self) -> ComposeResult:
