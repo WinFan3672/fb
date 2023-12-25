@@ -1,10 +1,11 @@
-Screen {
-    layout: vertical;
-}
-
-LeftPanel {
+WarningBox {
 	color: red;
 	text-align: center;
+}
+
+DirLabel {
+	background: teal;
+	color: white;
 }
 
 FilterBox {
