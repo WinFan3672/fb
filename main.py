@@ -1,4 +1,6 @@
 import os
+import subprocess
+import platform
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Header, Footer, Static, DirectoryTree, Label, Input, Log, TextArea
 from textual.containers import Horizontal, Vertical, Middle, Center
@@ -13,6 +15,8 @@ CLIPBD_MODE = "COPY"
 TODELETE = ""
 DIRS = [STARTDIR, STARTDIR]
 
+def isUnix():
+    return platform.uname()[0] == "Linux"
 def find_widget_by_id(root_widget, target_id):
     if root_widget.id == target_id:
         return root_widget
@@ -66,6 +70,7 @@ class MainApp(App):
     CSS_PATH = "app.css"
     BINDINGS = [
             # ('/', 'filter', 'Filter'),
+            ('o', 'openfile', 'Open File'),
             ('x', 'cut' , 'Cut'),
             ('c', 'copy' , 'Copy'),
             ('v', 'paste' , 'Paste'),
@@ -83,6 +88,15 @@ class MainApp(App):
         self.ltDir = DirTree(DIRS[0], "ltDir", self)
         self.rtDir = DirTree(DIRS[1], "rtDir", self)
         yield Vertical(WarningBox(), Horizontal(self.ltDir, self.rtDir))
+        self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning")
+    def action_openfile(self) -> None:
+        if SELECTED:
+            if isUnix():
+                subprocess.call(["xdg-open", SELECTED])
+            else:
+                os.startfile(SELECTED)
+        else:
+            self.notify("ERROR: No file is selected.", severity="error")
     def action_quit(self) -> None:
         self.exit()
     def action_delete(self) -> None:
@@ -124,8 +138,6 @@ class MainApp(App):
             ])
         self.notify(msg)
 
-    def action_open(self) -> None:
-        pass
 if __name__ == "__main__":
     app = MainApp()
     app.run()
