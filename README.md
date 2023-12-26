@@ -1,5 +1,5 @@
 # fb
-
+![Screenshot of the app](screenshot.svg)
 TUI File browser written using `textual`.
 ## What is it?
 `fb` is a TUI (terminal user interface) program for browsing files. It has two simultaneous panels, an easy-to-use UI, and more.
