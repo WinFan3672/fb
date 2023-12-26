@@ -78,6 +78,7 @@ class MainApp(App):
             ('i', 'info', 'File Info'),
             ('n', 'debug', 'Debug Info'),
             ('f1', 'help', 'Help'),
+            ('ctrl+s', 'app.screenshot()', 'Screenshot'),
             ('q', 'quit', 'Quit'),
             ]
     def incomplete(self):
@@ -88,7 +89,7 @@ class MainApp(App):
         self.ltDir = DirTree(DIRS[0], "ltDir", self)
         self.rtDir = DirTree(DIRS[1], "rtDir", self)
         yield Vertical(WarningBox(), Horizontal(self.ltDir, self.rtDir))
-        self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning")
+        self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
     def action_openfile(self) -> None:
         if SELECTED:
             if isUnix():
