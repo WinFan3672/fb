@@ -1,11 +1,14 @@
 import os
 import subprocess
 import platform
+import hashlib
+
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Header, Footer, Static, DirectoryTree, Label, Input, Log, TextArea
 from textual.containers import Horizontal, Vertical, Middle, Center
 from textual.reactive import reactive
 from textual.widget import Widget
+from textual.screen import Screen
 
 global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE
 SELECTED = ""
@@ -26,13 +29,13 @@ def find_widget_by_id(root_widget, target_id):
             return result
     return None
 
-
-class MessageBox(Static):
+class MessageBox(Screen):
     def __init__(self, message):
         super().__init__()
         self.message = message
     def compose(self):
-        yield Center(Label(self.message), Button("OK", variant="success"))
+        yield Static(self.message)
+        yield Button("OK", variant="success")
     def on_button_pressed(self, event):
         self.remove()
 
@@ -65,6 +68,7 @@ class DirTree(DirectoryTree):
         SELECTED = message.path
         self.mainApp.notify("Selected file: {}".format(message.path))
 class MainApp(App):
+    global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE
     TITLE = "File Browser"
     '''A file explorer written in Textual.'''
     CSS_PATH = "app.css"
@@ -79,6 +83,7 @@ class MainApp(App):
             ('n', 'debug', 'Debug Info'),
             ('f1', 'help', 'Help'),
             ('ctrl+s', 'app.screenshot()', 'Screenshot'),
+            # ('t', 'test', 'Test'),
             ('q', 'quit', 'Quit'),
             ]
     def incomplete(self):
@@ -90,10 +95,12 @@ class MainApp(App):
         self.rtDir = DirTree(DIRS[1], "rtDir", self)
         yield Vertical(WarningBox(), Horizontal(self.ltDir, self.rtDir))
         self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
+    def action_test(self) -> None:
+        MessageBox("TEST")
     def action_openfile(self) -> None:
         if SELECTED:
             if isUnix():
-                subprocess.call(["xdg-open", SELECTED])
+                subprocess.run(["xdg-open", SELECTED])
             else:
                 os.startfile(SELECTED)
         else:
@@ -103,8 +110,23 @@ class MainApp(App):
     def action_delete(self) -> None:
         self.incomplete()
     def action_info(self) -> None:
-        self.incomplete()
+        if SELECTED:
+            with open(SELECTED, "rb") as f:
+                d = f.read()
+            rawSize = os.path.getsize(SELECTED)
+            if rawSize >= 1048576:
+                size = "{} MB".format(rawSize // 1048576)
+            elif rawSize >= 1024:
+                size = "{} KB".format(rawSize // 1024)
+            else:
+                size = "{} B".format(rawSize)
+
+            sha256 = hashlib.sha256(d).hexdigest()
+            self.notify("File: {}\nSize: {}\nHash: {}".format(SELECTED, size, sha256))
+        else:
+            self.notify("ERROR: No file is selected.", severity="error")
     def action_copy(self) -> None:
+        global CLIPBD
         if SELECTED:
             CLIPBD = SELECTED
             CLIPBD_MODE = "COPY"

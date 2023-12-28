@@ -6,7 +6,7 @@ TUI File browser written using `textual`.
 ## Why did you make it?
 I couldn't find a similar tool. Most terminal-based tools are far too simple or far too complex, and none of them looked nice or familiar enough to meet my needs. So I decided to make my own. Sorry, `lf` users.
 ## Why 'fb'?
-I noticed that a lot of similar tools (`lf` etc.) have 2-letter names for simplicity, so I went with `fb` because it stands for 'file browser'. 
+I noticed that a lot of similar tools ([lf](https://github.com/gokcehan/lf),[nnn](https://github.com/jarun/nnn), etc.) have 2-letter names for simplicity, so I went with `fb` because it stands for 'file browser'. 
 ## When will it be done?
 I have no idea when; I hope to complete it one day.
 ## Using
