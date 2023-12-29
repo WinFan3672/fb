@@ -9,6 +9,7 @@ from textual.containers import Horizontal, Vertical, Middle, Center
 from textual.reactive import reactive
 from textual.widget import Widget
 from textual.screen import Screen
+from textual.binding import Binding
 
 global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE
 SELECTED = ""
@@ -85,6 +86,7 @@ class MainApp(App):
             ('ctrl+s', 'app.screenshot()', 'Screenshot'),
             # ('t', 'test', 'Test'),
             ('q', 'quit', 'Quit'),
+            Binding(action="cancelDelete", description="Cancel Delete", key="f2", show=False), ## Hidden binding to cancel delete
             ]
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
@@ -97,6 +99,10 @@ class MainApp(App):
         self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
     def action_test(self) -> None:
         MessageBox("TEST")
+    def action_cancelDelete(self):
+        global TODELETE
+        TODELETE = ""
+        self.notify("Delete operation canceled.")
     def action_openfile(self) -> None:
         if SELECTED:
             if isUnix():
@@ -108,7 +114,14 @@ class MainApp(App):
     def action_quit(self) -> None:
         self.exit()
     def action_delete(self) -> None:
-        self.incomplete()
+        global TODELETE
+        if TODELETE == "" and SELECTED:
+            TODELETE = SELECTED
+            self.notify("Are you sure you want to delete '{}'?\nD: Confirm\nF2: Cancel".format(SELECTED), severity="warning", timeout=8)
+        elif not SELECTED:
+            self.notify("ERROR: No file is selected.", severity="error")
+        else:
+            self.incomplete()
     def action_info(self) -> None:
         if SELECTED:
             with open(SELECTED, "rb") as f:
