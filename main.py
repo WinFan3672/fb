@@ -43,8 +43,6 @@ class MessageBox(Screen):
 class DebugLog(Log):
     id = "debugLog"
     focusable = False
-class DirLabel(Label):
-    pass
 class LeftPanel(Static):
     pass
 class WarningBox(Static):
