@@ -10,7 +10,7 @@ I noticed that a lot of similar tools ([lf](https://github.com/gokcehan/lf),[nnn
 ## When will it be done?
 I have no idea when; I hope to complete it one day.
 ## Using
-First, make sure Python and pip are installed.
+First, make sure Python and `pip` are installed.
 
 Next, install all dependencies using `pip`:
 ```
