@@ -11,13 +11,14 @@ from textual.widget import Widget
 from textual.screen import Screen
 from textual.binding import Binding
 
-global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE
+global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE, VERSION
 SELECTED = ""
 STARTDIR = os.path.expanduser("~")
 CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
 DIRS = [STARTDIR, STARTDIR]
+VERSION = "0.2.0"
 
 def isUnix():
     return platform.uname()[0] == "Linux"
@@ -44,7 +45,7 @@ class DebugLog(Log):
     id = "debugLog"
     focusable = False
 class LeftPanel(Static):
-    pass
+   pass
 class WarningBox(Static):
     id = "warnBox"
     def compose(self) -> ComposeResult:
@@ -65,12 +66,16 @@ class DirTree(DirectoryTree):
     def on_directory_tree_file_selected(self, message):
         global SELECTED, CLIPBD
         SELECTED = message.path
-        self.mainApp.notify("Selected file: {}".format(message.path))
+        self.notify("Selected file: {}".format(SELECTED))
+def helpMessage():
+    global VERSION
+    return "fb {}\n(c) 2023-2024 WinFan3672, some rights reserved.\nLicensed under GNU GPL version 2.0.".format(VERSION)
 class MainApp(App):
     global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE
-    TITLE = "File Browser"
+    TITLE = ""
     '''A file explorer written in Textual.'''
     CSS_PATH = "app.css"
+    SCREENS = {"aboutBox": MessageBox(helpMessage())}
     BINDINGS = [
             # ('/', 'filter', 'Filter'),
             ('o', 'openfile', 'Open File'),
@@ -82,9 +87,11 @@ class MainApp(App):
             ('n', 'debug', 'Debug Info'),
             ('f1', 'help', 'Help'),
             ('ctrl+s', 'app.screenshot()', 'Screenshot'),
-            # ('t', 'test', 'Test'),
+            # ('t', 'push_screen("aboutBox")', 'Test'),
             ('q', 'quit', 'Quit'),
-            Binding(action="cancelDelete", description="Cancel Delete", key="f2", show=False), ## Hidden binding to cancel delete
+            Binding(action="cancelDelete", description="Cancel Delete", key="f2", show=False), ## Hidden binding
+            Binding(action="clearClipboard", description="Clear Clipboard", key="f3", show=False),
+            Binding(action="deselect", description="Clear Selection", key="f4", show=False),
             ]
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
@@ -97,10 +104,20 @@ class MainApp(App):
         self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
     def action_test(self) -> None:
         MessageBox("TEST")
+    def action_clearClipboard(self):
+        global CLIPBD
+        if CLIPBD:
+            CLIPBD = ""
+            self.notify("Cleared clipboard.")
+        else:
+            self.notify("ERROR: Clipboard is empty.", severity="error")
     def action_cancelDelete(self):
         global TODELETE
-        TODELETE = ""
-        self.notify("Delete operation canceled.")
+        if TODELETE:
+            TODELETE = ""
+            self.notify("Delete operation canceled.")
+        else:
+            self.notify("ERROR: No operation to cancel.", severity="error")
     def action_openfile(self) -> None:
         if SELECTED:
             if isUnix():
@@ -120,6 +137,13 @@ class MainApp(App):
             self.notify("ERROR: No file is selected.", severity="error")
         else:
             self.incomplete()
+    def action_deselect(self):
+        global SELECTED
+        if SELECTED:
+            SELECTED = ""
+            self.notify("Deselected file.")
+        else:
+            self.notify("ERROR: No file is selected.", severity="error")
     def action_info(self) -> None:
         if SELECTED:
             with open(SELECTED, "rb") as f:
@@ -141,7 +165,7 @@ class MainApp(App):
         if SELECTED:
             CLIPBD = SELECTED
             CLIPBD_MODE = "COPY"
-            self.notify("Copied to clipboard: {}".format(CLIPBD))
+            self.notify("Copied to clipboard: {}\nF3: Clear Clipboard".format(CLIPBD))
         else:
             self.notify("Error: No file is selected.", severity="error")
     def action_cut(self) -> None:
@@ -159,18 +183,11 @@ class MainApp(App):
         else:
             self.notify("Error: No file is selected.", severity="error")
     def action_debug(self) -> None:
-        self.notify(
-            "Selected: {}\nClipboard: {}".format(SELECTED if SELECTED else "None", CLIPBD if CLIPBD else "None"))
+        self.notify("Selected: {}\nClipboard: {}\nClipboard Mode: {}".format(SELECTED if SELECTED else "None", CLIPBD if CLIPBD else "None", CLIPBD_MODE))
     def action_filter(self) -> None:
         self.mount(FilterBox())
-
-    def action_help(self) -> None:
-        msg = "\n".join([
-            "fb 0.1.0",
-            "(c) 2023-2024 WinFan3672, some rights reserved.",
-            "Licensed under GNU GPL version 2.0.",
-            ])
-        self.notify(msg)
+    def action_help(self):
+        self.notify(helpMessage())
 
 if __name__ == "__main__":
     app = MainApp()

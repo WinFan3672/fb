@@ -8,7 +8,19 @@ I couldn't find a similar tool. Most terminal-based tools are far too simple or 
 ## Why 'fb'?
 I noticed that a lot of similar tools ([lf](https://github.com/gokcehan/lf),[nnn](https://github.com/jarun/nnn), etc.) have 2-letter names for simplicity, so I went with `fb` because it stands for 'file browser'. 
 ## When will it be done?
-I have no idea when; I hope to complete it one day.
+Here's a to-do list of all features to be implemented by version 1.0:
+
+- [ ] Switching directories
+- [ ] Pasting files
+- [ ] Deleting files
+- [x] Opening files
+- [ ] Address bars for each file tree
+- [ ] Backend changes
+	- [ ] Ability to check which directory tree (if any) is selected
+	- [ ] Message box function
+- [ ] More CSS
+- [ ] Customisable options/config file
+
 ## Using
 First, make sure Python and `pip` are installed.
 
