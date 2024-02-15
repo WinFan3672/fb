@@ -1,12 +1,12 @@
-# fb
+# fbf
 ![Screenshot of the app](screenshot.svg)
 TUI File browser written using `textual`.
 ## What is it?
-`fb` is a TUI (terminal user interface) program for browsing files. It has two simultaneous panels, an easy-to-use UI, and more.
+`fbf` is a TUI (terminal user interface) program for browsing files. It has two simultaneous panels, an easy-to-use UI, and more.
 ## Why did you make it?
 I couldn't find a similar tool. Most terminal-based tools are far too simple or far too complex, and none of them looked nice or familiar enough to meet my needs. So I decided to make my own. Sorry, `lf` users.
-## Why 'fb'?
-I noticed that a lot of similar tools ([lf](https://github.com/gokcehan/lf),[nnn](https://github.com/jarun/nnn), etc.) have 2-letter names for simplicity, so I went with `fb` because it stands for 'file browser'. 
+## Why 'fbf'?
+I noticed that a lot of similar tools ([lf](https://github.com/gokcehan/lf),[nnn](https://github.com/jarun/nnn), etc.) have 2- or 3-letter names for simplicity, so I went with `fbf` because it stands for 'file browser'. 
 ## When will it be done?
 Here's a to-do list of all features to be implemented by version 1.0:
 
@@ -36,7 +36,7 @@ $ python main.py
 ```
 (Again, some systems have `python3`, so make sure to check.)
 
-NOTE: You need to run `fb` inside of a terminal or it won't work.
+NOTE: You need to run `fbf` inside of a terminal or it won't work.
 ## Contributing
 There are several ways you can contribute:
 * Report issues. I would love to know if you have any bug reports or suggestions.
