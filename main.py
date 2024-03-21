@@ -11,14 +11,21 @@ from textual.widget import Widget
 from textual.screen import Screen
 from textual.binding import Binding
 
-global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE, VERSION
+global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE, VERSION, CSS_PATH
 SELECTED = ""
 STARTDIR = os.path.expanduser("~")
 CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
-DIRS = [STARTDIR, STARTDIR]
-VERSION = "0.2.0"
+DIRS = [os.getcwd(), STARTDIR]
+VERSION = "0.2.1"
+
+if os.path.isfile("/usr/share/fb/app.css"):
+    CSS_PATH = "/usr/share/fb/app.css"
+elif os.path.isfile("./app.css"):
+    CSS_PATH = "app.css"
+else:
+    raise FileNotFoundError("Cannot find app.css. Reinstall fb and try again.")
 
 def isUnix():
     return platform.uname()[0] == "Linux"
