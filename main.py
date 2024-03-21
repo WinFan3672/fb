@@ -78,6 +78,7 @@ class DirTree(DirectoryTree):
 def helpMessage():
     global VERSION
     return "fb {}\n(c) 2023-2024 WinFan3672, some rights reserved.\nLicensed under GNU GPL version 2.0.".format(VERSION)
+
 class MainApp(App):
     global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE
     TITLE = ""
@@ -95,14 +96,20 @@ class MainApp(App):
             ('n', 'debug', 'Debug Info'),
             ('f1', 'help', 'Help'),
             ('ctrl+s', 'app.screenshot()', 'Screenshot'),
-            # ('t', 'push_screen("aboutBox")', 'Test'),
             ('q', 'quit', 'Quit'),
+            # Binding(action="test", key="t", description="", show=False),
             Binding(action="cancelDelete", description="Cancel Delete", key="f2", show=False), ## Hidden binding
             Binding(action="clearClipboard", description="Clear Clipboard", key="f3", show=False),
             Binding(action="deselect", description="Clear Selection", key="f4", show=False),
+            Binding(action="refresh", description="Refresh app", key="f5", show=False),
             ]
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
+    def selected(self):
+        if self.ltDir.selected:
+            return self.ltDir
+        elif self.rtDir.selected:
+            return self.rtDir
     def compose(self):
         yield Header()
         yield Footer()
@@ -111,7 +118,13 @@ class MainApp(App):
         yield Vertical(WarningBox(), Horizontal(self.ltDir, self.rtDir))
         self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
     def action_test(self) -> None:
-        MessageBox("TEST")
+        sel = self.selected()
+        if sel == self.ltDir:
+            self.notify("Left")
+        elif sel == self.rtDir:
+            self.notify("Right")
+        else:
+            self.notify("None")
     def action_clearClipboard(self):
         global CLIPBD
         if CLIPBD:
@@ -196,6 +209,10 @@ class MainApp(App):
         self.mount(FilterBox())
     def action_help(self):
         self.notify(helpMessage())
+    def action_refresh(self):
+        self.ltDir.reload() 
+        self.rtDir.reload()
+        self.screen.refresh()
 
 if __name__ == "__main__":
     app = MainApp()
