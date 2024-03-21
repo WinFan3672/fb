@@ -81,7 +81,7 @@ class MainApp(App):
     global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE
     TITLE = ""
     '''A file explorer written in Textual.'''
-    CSS_PATH = "app.css"
+    CSS_PATH = CSS_PATH
     SCREENS = {"aboutBox": MessageBox(helpMessage())}
     BINDINGS = [
             # ('/', 'filter', 'Filter'),
