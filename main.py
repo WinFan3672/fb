@@ -101,7 +101,7 @@ class MainApp(App):
             Binding(action="cancelDelete", description="Cancel Delete", key="f2", show=False), ## Hidden binding
             Binding(action="clearClipboard", description="Clear Clipboard", key="f3", show=False),
             Binding(action="deselect", description="Clear Selection", key="f4", show=False),
-            Binding(action="refresh", description="Refresh app", key="f5", show=False),
+            # Binding(action="refresh", description="Refresh app", key="f5", show=False),
             ]
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
