@@ -19,12 +19,12 @@ CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
 DIRS = [os.getcwd(), STARTDIR]
-VERSION = "0.2.1"
+VERSION = "0.2.2"
 
-if os.path.isfile("/usr/share/fb/app.css"):
-    CSS_PATH = "/usr/share/fb/app.css"
-elif os.path.isfile("./app.css"):
+if os.path.isfile("./app.css"):
     CSS_PATH = "app.css"
+elif os.path.isfile("/usr/share/fb/app.css"):
+    CSS_PATH = "/usr/share/fb/app.css"
 else:
     raise FileNotFoundError("Cannot find app.css. Reinstall fb and try again.")
 
