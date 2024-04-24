@@ -18,7 +18,7 @@ CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
 DIRS = [os.getcwd(), STARTDIR]
-VERSION = "0.2.2"
+VERSION = "0.2.3"
 
 if os.path.isfile("./app.css"):
     CSS_PATH = "app.css"
