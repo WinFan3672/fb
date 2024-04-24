@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import os
 import subprocess
 import platform
@@ -53,7 +52,7 @@ class DebugLog(Log):
     id = "debugLog"
     focusable = False
 class LeftPanel(Static):
-   pass
+    pass
 class WarningBox(Static):
     id = "warnBox"
     def compose(self) -> ComposeResult:
@@ -85,24 +84,29 @@ class MainApp(App):
     '''A file explorer written in Textual.'''
     CSS_PATH = CSS_PATH
     SCREENS = {"aboutBox": MessageBox(helpMessage())}
+
+    CLEARDEL = Binding(action="cancelDelete", description="Cancel Delete", key="f2", show=False)
+    CLEARCPIP = Binding(action="clearClipboard", description="Clear Clipboard", key="f3", show=False)
+    DESEL = Binding(action="deselect", description="Clear Selection", key="f4", show=False)
+
     BINDINGS = [
-            # ('/', 'filter', 'Filter'),
-            ('o', 'openfile', 'Open File'),
-            ('x', 'cut' , 'Cut'),
-            ('c', 'copy' , 'Copy'),
-            ('v', 'paste' , 'Paste'),
-            ('d', 'delete', 'Delete'),
-            ('i', 'info', 'File Info'),
-            ('n', 'debug', 'Debug Info'),
-            ('f1', 'help', 'Help'),
-            ('ctrl+s', 'app.screenshot()', 'Screenshot'),
-            ('q', 'quit', 'Quit'),
-            # Binding(action="test", key="t", description="", show=False),
-            Binding(action="cancelDelete", description="Cancel Delete", key="f2", show=False), ## Hidden binding
-            Binding(action="clearClipboard", description="Clear Clipboard", key="f3", show=False),
-            Binding(action="deselect", description="Clear Selection", key="f4", show=False),
-            # Binding(action="refresh", description="Refresh app", key="f5", show=False),
-            ]
+        # ('/', 'filter', 'Filter'),
+        ('o', 'openfile', 'Open File'),
+        ('x', 'cut' , 'Cut'),
+        ('c', 'copy' , 'Copy'),
+        ('v', 'paste' , 'Paste'),
+        ('d', 'delete', 'Delete'),
+        ('i', 'info', 'File Info'),
+        ('n', 'debug', 'Debug Info'),
+        ('f1', 'help', 'Help'),
+        ('ctrl+s', 'app.screenshot()', 'Screenshot'),
+        ('q', 'quit', 'Quit'),
+        CLEARDEL,
+        CLEARCPIP,
+        DESEL,
+        # Binding(action="test", key="t", description="Test", show=False),
+        # Binding(action="refresh", description="Refresh app", key="f5", show=False),
+    ]
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
     def selected(self):
@@ -157,7 +161,12 @@ class MainApp(App):
         elif not SELECTED:
             self.notify("ERROR: No file is selected.", severity="error")
         else:
-            self.incomplete()
+            try:
+                os.remove(SELECTED)
+                self.notify("Successfully deleted file.")
+            except:
+                self.notify("ERROR: Failed to delete file!", severity="error")
+            self.action_refresh()
     def action_deselect(self):
         global SELECTED
         if SELECTED:
