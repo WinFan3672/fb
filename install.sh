@@ -8,11 +8,11 @@ UPDATEFILE="/bin/fb_update"
 
 main() {
     echo "Cloning repo..."
-    ## Clone the repo
     rm -r /tmp/fb || sleep 0
     git clone "$REPO" "$TEMPDIR"
     cd "$TEMPDIR" || exit 1
-    ## Copy files
+    echo "Installing pip packages..."
+    pip install -r $TEMPDIR/requirements.txt
     echo "Copying files..."
     mkdir "$DATADIR" || sleep 0
     cp app.css "$DATADIR/app.css"
