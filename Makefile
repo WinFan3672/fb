@@ -3,6 +3,6 @@ nuitka:
 install:
 	install -m 755 main.bin /bin/fb
 uninstall:
-	rm /bin/fb
+	-rm /bin/fb
 clean:
-	rm main.bin
+	-rm main.bin
