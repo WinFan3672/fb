@@ -19,14 +19,9 @@ CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
 DIRS = [os.getcwd(), STARTDIR]
-VERSION = "0.2.2"
+VERSION = "0.2.3"
 
-if os.path.isfile("app.css"):
-    CSS_PATH = "app.css"
-elif os.path.isfile("/usr/share/fb/app.css"):
-    CSS_PATH = "/usr/share/fb/app.css"
-else:
-    raise FileNotFoundError("Cannot find app.css. Reinstall fb and try again.")
+CSS_PATH = "app.css"
 
 def isUnix():
     return platform.uname()[0] == "Linux"
