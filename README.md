@@ -15,37 +15,50 @@ Here's a to-do list of all features to be implemented by version 1.0:
 - [ ] Deleting files
 - [x] Opening files
 - [ ] Address bars for each file tree
-- [ ] Backend changes
-	- [ ] Ability to check which directory tree (if any) is selected
-	- [ ] Message box function
 - [ ] More CSS
 - [ ] Customisable options/config file
-- [ ] Pre-built Binaries
+- [ ] Pre-built binaries for releases
     - [x] Linux (x86_64)
     - [ ] Linux (x86)
     - [ ] Linux (ARM 64-bit)
     - [ ] Linux (ARM 32-bit)
-    - [ ] Windows
-    - [ ] MacOS (Silicon)
-    - [ ] MacOS (Intel)
-
+    - [x] Windows (x86_64)
+    - [ ] Windows (x86)
+    - [ ] Windows (ARM 64-bit)
+    - [ ] MacOS (ARM 64-bit)
+    - [ ] MacOS (x86_64)
+- [ ] External Packages
+     - [ ] AUR packages (both regular and -git)
+     - [ ] Flatpak (official)
+     - [ ] Winget
 ## Downloading and Installing (Linux)
 1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/release/latest) and download a Linux build. Binaries should be included.
 2. Rename it to `fb` and copy it to `/bin` (you will require root permissions to do so).
 ## Compiling and Installing (Linux)
-1. Clone this repo: `git clone https://codeberg.org/WinFan3672/fb`
-2. `cd` into it
-3. Run `pip install -r requirements.txt`
-4. Run `make` to compile
-5. Run `make install` to install your compiled executable
+0. Make sure `clang` and `git` are installed (check with your distro for support);
+1. Clone this repo: `git clone https://codeberg.org/WinFan3672/fb`;
+2. `cd` into it;
+3. Run `pip install -r requirements.txt`;
+4. Run `pip install nuitka` to install Nuitka (the compiler);
+5. Run `make` to compile;
+6. Run `make install` to install your compiled executable.
+## Downloading and Installing (Windows)
+1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/release/latest) and download a Windows build;
+2. Rename the downloaded file to `fb.exe`.
+
+Currently, there is no way to install `fb`, so you'll need to run `fb.exe` to use it.
+## Compiling (Windows)
+0. Make sure you have both Visual Studio and Git for Windows installed;
+1. Clone the repo: `git clone https://codeberg.org/WinFan3672/fb`;
+2. `cd` into it and run `pip install -r requirements.txt` and `pip install nuitka`;
+3. Run the `Compile-Windows.bat` script to compile `fb`. 
+
+Currently, there is no way to install `fb`, so you'll need to run `fb.exe` to use it.
 ## Using
-If you've installed `fb`, just run it like so:
+To run the installed `fb` from a terminal:
+
 ```
 $ fb
-```
-If you have not, from this repo:
-```
-$ python main.py
 ```
 ## Contributing
 There are several ways you can contribute:
