@@ -32,7 +32,7 @@ Here's a to-do list of all features to be implemented by version 1.0:
      - [ ] Flatpak (official)
      - [ ] Winget
 ## Downloading and Installing (Linux)
-1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/release/latest) and download a Linux build. Binaries should be included.
+1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/releases/latest) and download a Linux build. Binaries should be included.
 2. Rename it to `fb` and copy it to `/bin` (you will require root permissions to do so).
 ## Compiling and Installing (Linux)
 0. Make sure `clang` and `git` are installed (check with your distro for support);
@@ -43,7 +43,7 @@ Here's a to-do list of all features to be implemented by version 1.0:
 5. Run `make` to compile;
 6. Run `make install` to install your compiled executable.
 ## Downloading and Installing (Windows)
-1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/release/latest) and download a Windows build;
+1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/releases/latest) and download a Windows build;
 2. Rename the downloaded file to `fb.exe`.
 
 Currently, there is no way to install `fb`, so you'll need to run `fb.exe` to use it.
