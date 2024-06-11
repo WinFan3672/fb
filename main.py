@@ -18,7 +18,6 @@ STARTDIR = os.path.expanduser("~")
 CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
-DIRS = [os.getcwd(), STARTDIR]
 VERSION = "0.2.3"
 
 CSS_PATH = "app.css"
@@ -105,26 +104,12 @@ class MainApp(App):
     ]
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
-    def selected(self):
-        if self.ltDir.selected:
-            return self.ltDir
-        elif self.rtDir.selected:
-            return self.rtDir
     def compose(self):
         yield Header()
         yield Footer()
-        self.ltDir = DirTree(DIRS[0], "ltDir", self)
-        self.rtDir = DirTree(DIRS[1], "rtDir", self)
-        yield Vertical(WarningBox(), Horizontal(self.ltDir, self.rtDir))
+        self.ltDir = DirTree(os.getcwd(), "ltDir", self)
+        yield Vertical(WarningBox(), self.ltDir)
         self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
-    def action_test(self) -> None:
-        sel = self.selected()
-        if sel == self.ltDir:
-            self.notify("Left")
-        elif sel == self.rtDir:
-            self.notify("Right")
-        else:
-            self.notify("None")
     def action_clearClipboard(self):
         global CLIPBD
         if CLIPBD:
@@ -216,7 +201,6 @@ class MainApp(App):
         self.notify(helpMessage())
     def action_refresh(self):
         self.ltDir.reload() 
-        self.rtDir.reload()
         self.screen.refresh()
 
 if __name__ == "__main__":
