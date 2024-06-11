@@ -20,26 +20,37 @@ Here's a to-do list of all features to be implemented by version 1.0:
 	- [ ] Message box function
 - [ ] More CSS
 - [ ] Customisable options/config file
+- [ ] Pre-built Binaries
+    - [x] Linux (x86_64)
+    - [ ] Linux (x86)
+    - [ ] Linux (ARM 64-bit)
+    - [ ] Linux (ARM 32-bit)
+    - [ ] Windows
+    - [ ] MacOS (Silicon)
+    - [ ] MacOS (Intel)
 
+## Downloading and Installing (Linux)
+1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/release/latest) and download a Linux build. Binaries should be included.
+2. Rename it to `fb` and copy it to `/bin` (you will require root permissions to do so).
+## Compiling and Installing (Linux)
+1. Clone this repo: `git clone https://codeberg.org/WinFan3672/fb`
+2. `cd` into it
+3. Run `pip install -r requirements.txt`
+4. Run `make` to compile
+5. Run `make install` to install your compiled executable
 ## Using
-First, make sure Python and `pip` are installed.
-
-Next, install all dependencies using `pip`:
+If you've installed `fb`, just run it like so:
 ```
-$ pip install -r requirements.txt
+$ fb
 ```
-(Some systems use `pip3` instead of `pip`, so make sure that you have the right one!)
-
-Then, clone the repo and run:
+If you have not, from this repo:
 ```
 $ python main.py
 ```
-(Again, some systems have `python3`, so make sure to check.)
-
-NOTE: You need to run `fb` inside of a terminal or it won't work.
 ## Contributing
 There are several ways you can contribute:
 * Report issues. I would love to know if you have any bug reports or suggestions.
 * Contribute code. Pull requests are welcome. In fact, I encourage it. If you're new to contributing to projects, definitely give it a try.
 * Write documentation. If you enjoy doing that, go for it.
+* Provide builds for alternate environments (other Linux architectures, Windows, etc.)
 * Spread the word. If you like it, tell all your nerdy friends about it. Maybe they'll like it as well.
