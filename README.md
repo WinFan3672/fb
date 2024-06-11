@@ -14,8 +14,7 @@ Here's a to-do list of all features to be implemented by version 1.0:
 - [ ] Pasting files
 - [ ] Deleting files
 - [x] Opening files
-- [ ] Address bars for each file tree
-- [ ] More CSS
+- [ ] Address bar
 - [ ] Customisable options/config file
 - [ ] Pre-built binaries for releases
     - [x] Linux (x86_64)
