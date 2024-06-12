@@ -10,11 +10,11 @@ I noticed that a lot of similar tools ([lf](https://github.com/gokcehan/lf),[nnn
 ## When will it be done?
 Here's a to-do list of all features to be implemented by version 1.0:
 
-- [ ] Switching directories
+- [x] Switching directories
 - [ ] Pasting files
-- [ ] Deleting files
+- [x] Deleting files
 - [x] Opening files
-- [ ] Address bar
+- [x] Address bar
 - [ ] Customisable options/config file
 - [ ] Pre-built binaries for releases
     - [x] Linux (x86_64)
