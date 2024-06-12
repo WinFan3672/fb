@@ -15,11 +15,10 @@ from textual.binding import Binding
 
 global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE, VERSION, CSS_PATH
 SELECTED = ""
-STARTDIR = os.path.expanduser("~")
 CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
-VERSION = "0.2.3"
+VERSION = "0.3.0"
 
 CSS_PATH = "app.css"
 
@@ -55,13 +54,7 @@ class MessageBox(Screen):
 class DebugLog(Log):
     id = "debugLog"
     focusable = False
-class LeftPanel(Static):
-    pass
-class WarningBox(Static):
-    id = "warnBox"
-    def compose(self) -> ComposeResult:
-        self.label = Label("This is pre-release software; expect missing features and bugs.")
-        yield self.label
+
 class FilterBox(Static):
     def compose(self) -> ComposeResult:
         yield Input("Filter...", id="filterBox")
@@ -101,7 +94,6 @@ class MainApp(App):
         ('c', 'copy' , 'Copy'),
         ('v', 'paste' , 'Paste'),
         ('d', 'delete', 'Delete'),
-        ('p', 'parentdir', 'Parent Directory'),
         ('i', 'info', 'File Info'),
         ('n', 'debug', 'Debug Info'),
         ('f1', 'help', 'Help'),
@@ -214,9 +206,6 @@ class MainApp(App):
     def action_refresh(self):
         self.ltDir.reload() 
         self.screen.refresh()
-    def action_parentdir(self):
-        self.notify(str(isinstance(self.ltDir.path, pathlib.Path)))
-        self.incomplete()
 
 if __name__ == "__main__":
     app = MainApp()
