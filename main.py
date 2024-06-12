@@ -14,6 +14,7 @@ from textual.screen import Screen
 from textual.binding import Binding
 
 global SELECTED, CLIPBD, CLIPBD_MODE, TODELETE, VERSION, CSS_PATH
+
 SELECTED = ""
 CLIPBD = ""
 CLIPBD_MODE = "COPY"
@@ -32,6 +33,7 @@ class AddressBar(Input):
 
 def isUnix():
     return platform.uname()[0] == "Linux"
+
 def find_widget_by_id(root_widget, target_id):
     if root_widget.id == target_id:
         return root_widget
@@ -107,11 +109,12 @@ class MainApp(App):
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
     def compose(self):
-        # yield Header()
         yield Footer()
         self.ltDir = DirTree(os.getcwd(), "ltDir", self)
         self.addr = AddressBar(self.ltDir)
         yield Vertical(self.addr, self.ltDir)
+
+        self.ltDir.focus()
         self.notify("Warning: This is pre-release software. Expect bugs and incomplete features.", severity="warning", timeout=5)
         self.notify("Warning: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
     def action_clearClipboard(self):
@@ -130,8 +133,8 @@ class MainApp(App):
             self.notify("ERROR: No operation to cancel.", severity="error")
     def action_openfile(self) -> None:
         if SELECTED:
-            if isUnix():
-                subprocess.run(["xdg-open", SELECTED])
+            if os.name == "posix":
+                self.incomplete()
             else:
                 os.startfile(SELECTED)
         else:
@@ -161,18 +164,17 @@ class MainApp(App):
             self.notify("ERROR: No file is selected.", severity="error")
     def action_info(self) -> None:
         if SELECTED:
-            with open(SELECTED, "rb") as f:
-                d = f.read()
             rawSize = os.path.getsize(SELECTED)
+            if rawSize >= 1024**3:
+                size = "{} GiB".format(rawSize // 1024**3)
             if rawSize >= 1048576:
-                size = "{} MB".format(rawSize // 1048576)
+                size = "{} MiB".format(rawSize // 1048576)
             elif rawSize >= 1024:
-                size = "{} KB".format(rawSize // 1024)
+                size = "{} KiB".format(rawSize // 1024)
             else:
                 size = "{} B".format(rawSize)
 
-            sha256 = hashlib.sha256(d).hexdigest()
-            self.notify("File: {}\nSize: {}\nHash: {}".format(SELECTED, size, sha256))
+            self.notify("File: {}\nSize: {}".format(SELECTED, size, sha256))
         else:
             self.notify("ERROR: No file is selected.", severity="error")
     def action_copy(self) -> None:
