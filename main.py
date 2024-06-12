@@ -3,6 +3,7 @@ import os
 import subprocess
 import platform
 import hashlib
+import pathlib
 
 from textual.app import App, ComposeResult
 from textual.widgets import Button, Header, Footer, Static, DirectoryTree, Label, Input, Log, TextArea
@@ -21,6 +22,14 @@ TODELETE = ""
 VERSION = "0.2.3"
 
 CSS_PATH = "app.css"
+
+class AddressBar(Input):
+    def __init__(self, ltDir):
+        super().__init__(os.getcwd())
+        self.ltDir = ltDir
+    def action_submit(self):
+        self.ltDir.path = self.value
+        self.ltDir.reload()
 
 def isUnix():
     return platform.uname()[0] == "Linux"
@@ -57,6 +66,7 @@ class FilterBox(Static):
     def compose(self) -> ComposeResult:
         yield Input("Filter...", id="filterBox")
         yield Button("Go", id="goButton")
+
 class DirTree(DirectoryTree):
     id = "dirTree"
     show_root = reactive(False)
@@ -91,6 +101,7 @@ class MainApp(App):
         ('c', 'copy' , 'Copy'),
         ('v', 'paste' , 'Paste'),
         ('d', 'delete', 'Delete'),
+        ('p', 'parentdir', 'Parent Directory'),
         ('i', 'info', 'File Info'),
         ('n', 'debug', 'Debug Info'),
         ('f1', 'help', 'Help'),
@@ -100,16 +111,17 @@ class MainApp(App):
         CLEARCPIP,
         DESEL,
         # Binding(action="test", key="t", description="Test", show=False),
-        # Binding(action="refresh", description="Refresh app", key="f5", show=False),
     ]
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
     def compose(self):
-        yield Header()
+        # yield Header()
         yield Footer()
         self.ltDir = DirTree(os.getcwd(), "ltDir", self)
-        yield Vertical(WarningBox(), self.ltDir)
-        self.notify("WARNING: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
+        self.addr = AddressBar(self.ltDir)
+        yield Vertical(self.addr, self.ltDir)
+        self.notify("Warning: This is pre-release software. Expect bugs and incomplete features.", severity="warning", timeout=5)
+        self.notify("Warning: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
     def action_clearClipboard(self):
         global CLIPBD
         if CLIPBD:
@@ -202,6 +214,9 @@ class MainApp(App):
     def action_refresh(self):
         self.ltDir.reload() 
         self.screen.refresh()
+    def action_parentdir(self):
+        self.notify(str(isinstance(self.ltDir.path, pathlib.Path)))
+        self.incomplete()
 
 if __name__ == "__main__":
     app = MainApp()
