@@ -27,8 +27,10 @@ Here's a to-do list of all features to be implemented by version 1.0:
     - [ ] MacOS (ARM 64-bit)
     - [ ] MacOS (x86_64)
 - [ ] External Packages
-     - [ ] AUR packages (both regular and -git)
-     - [ ] Flatpak (official)
+     - [ ] AUR Packages
+         - [ ] `fb`
+         - [ ] `fb-git`
+     - [ ] Flatpak
      - [ ] Winget
 ## Downloading and Installing (Linux)
 1. [Go to the latest release](https://codeberg.org/WinFan3672/fb/releases/latest) and download a Linux build. Binaries should be included.
