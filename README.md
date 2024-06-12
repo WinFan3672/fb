@@ -13,7 +13,9 @@ Here's a to-do list of all features to be implemented by version 1.0:
 - [x] Switching directories
 - [ ] Pasting files
 - [x] Deleting files
-- [x] Opening files
+- [ ] Opening files
+- [ ] Renaming files
+- [ ] File search/filter
 - [x] Address bar
 - [ ] Customisable options/config file
 - [ ] Pre-built binaries for releases
