@@ -174,7 +174,7 @@ class MainApp(App):
             else:
                 size = "{} B".format(rawSize)
 
-            self.notify("File: {}\nSize: {}".format(SELECTED, size, sha256))
+            self.notify("File: {}\nSize: {}".format(SELECTED, size))
         else:
             self.notify("ERROR: No file is selected.", severity="error")
     def action_copy(self) -> None:
