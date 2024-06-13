@@ -161,4 +161,6 @@ cython_debug/
 #.idea/
 
 *.bin
-main.exe
+*.dist
+*.build
+*.exe
