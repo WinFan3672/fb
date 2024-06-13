@@ -29,6 +29,7 @@ Here's a to-do list of all features to be implemented by version 1.0:
 - [ ] External Packages
      - [ ] AUR Packages
          - [ ] `fb`
+         - [ ] `fb-bin`
          - [ ] `fb-git`
      - [ ] Flatpak
      - [ ] Winget
