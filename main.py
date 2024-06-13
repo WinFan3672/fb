@@ -19,7 +19,7 @@ SELECTED = ""
 CLIPBD = ""
 CLIPBD_MODE = "COPY"
 TODELETE = ""
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 
 CSS_PATH = "app.css"
 
