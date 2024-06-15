@@ -50,9 +50,8 @@ Currently, there is no way to install `fb`, so you'll need to run `fb.exe` to us
 0. Make sure you have both Visual Studio and Git for Windows installed;
 1. Clone the repo: `git clone https://codeberg.org/WinFan3672/fb`;
 2. `cd` into it and run `pip install -r requirements.txt` and `pip install nuitka`;
-3. Run the `Compile-Windows.bat` script to compile `fb`. 
-
-Currently, there is no way to install `fb`, so you'll need to run `fb.exe` to use it.
+3. Run the `Compile-Windows.bat` script to compile `fb`;
+4. Run the `Install-Windows.bat` script to install your newly compiled `fb`.
 ## Using
 To run the installed `fb` from a terminal:
 
