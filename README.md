@@ -11,18 +11,15 @@ I noticed that a lot of similar tools ([lf](https://github.com/gokcehan/lf),[nnn
 Here's a to-do list of all features to be implemented by version 1.0:
 
 - [x] Switching directories
-- [ ] Pasting files
+- [x] Pasting files
 - [x] Deleting files
 - [x] Opening files
 - [x] Address bar
 - [ ] Customisable options/config file
 - [ ] Pre-built binaries for releases
     - [x] Linux (x86_64)
-    - [ ] Linux (x86)
     - [ ] Linux (ARM 64-bit)
-    - [ ] Linux (ARM 32-bit)
     - [x] Windows (x86_64)
-    - [ ] Windows (x86)
     - [ ] Windows (ARM 64-bit)
     - [ ] MacOS (ARM 64-bit)
     - [ ] MacOS (x86_64)
