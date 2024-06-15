@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import os
 import subprocess
 import platform
@@ -106,8 +105,12 @@ class MainApp(App):
         DESEL,
         # Binding(action="test", key="t", description="Test", show=False),
     ]
+
+
     def incomplete(self):
         self.notify("This feature has not been added yet.", severity="error")
+
+
     def compose(self):
         yield Footer()
         self.ltDir = DirTree(os.getcwd(), "ltDir", self)
@@ -117,6 +120,8 @@ class MainApp(App):
         self.ltDir.focus()
         self.notify("Warning: This is pre-release software. Expect bugs and incomplete features.", severity="warning", timeout=5)
         self.notify("Warning: The 'open file' functionality is currently not fully tested on all platforms.", severity="warning", timeout=5)
+
+
     def action_clearClipboard(self):
         global CLIPBD
         if CLIPBD:
@@ -124,6 +129,8 @@ class MainApp(App):
             self.notify("Cleared clipboard.")
         else:
             self.notify("ERROR: Clipboard is empty.", severity="error")
+
+
     def action_cancelDelete(self):
         global TODELETE
         if TODELETE:
@@ -131,6 +138,8 @@ class MainApp(App):
             self.notify("Delete operation canceled.")
         else:
             self.notify("ERROR: No operation to cancel.", severity="error")
+
+
     def action_openfile(self) -> None:
         if SELECTED:
             if os.name == "posix":
@@ -139,8 +148,12 @@ class MainApp(App):
                 os.startfile(SELECTED)
         else:
             self.notify("ERROR: No file is selected.", severity="error")
+
+
     def action_quit(self) -> None:
         self.exit()
+
+
     def action_delete(self) -> None:
         global TODELETE
         if TODELETE == "" and SELECTED:
@@ -155,6 +168,8 @@ class MainApp(App):
             except:
                 self.notify("ERROR: Failed to delete file!", severity="error")
             self.action_refresh()
+
+
     def action_deselect(self):
         global SELECTED
         if SELECTED:
@@ -162,6 +177,8 @@ class MainApp(App):
             self.notify("Deselected file.")
         else:
             self.notify("ERROR: No file is selected.", severity="error")
+
+
     def action_info(self) -> None:
         if SELECTED:
             rawSize = os.path.getsize(SELECTED)
@@ -177,6 +194,8 @@ class MainApp(App):
             self.notify("File: {}\nSize: {}".format(SELECTED, size))
         else:
             self.notify("ERROR: No file is selected.", severity="error")
+
+
     def action_copy(self) -> None:
         global CLIPBD
         if SELECTED:
@@ -185,6 +204,8 @@ class MainApp(App):
             self.notify("Copied to clipboard: {}\nF3: Clear Clipboard".format(CLIPBD))
         else:
             self.notify("Error: No file is selected.", severity="error")
+
+
     def action_cut(self) -> None:
         if SELECTED:
             CLIPBD = SELECTED
@@ -192,8 +213,23 @@ class MainApp(App):
             self.notify("Cut to clipboard: {}".format(CLIPBD))
         else:
             self.notify("Error: No file is selected.", severity="error")
+
+
     def action_paste(self) -> None:
-        self.incomplete()
+        if CLIPBD:
+            self.notify("Copying {} to {}...".format(CLIPBD, self.ltDir.path))
+            with open(SELECTED, "rb") as f:
+                data = f.read()
+            if CLIPBD_MODE == "CUT":
+                os.remove(CLIPBD)
+            with open(os.path.join(self.ltDir.path, os.path.basename(CLIPBD)), "wb") as f:
+                f.write(data)
+            self.notify("Copied successfully.")
+            self.ltDir.reload()
+        else:
+            self.notify("Cannot paste, clipboard empty", severity="error")
+
+
     def action_debug(self) -> None:
         if SELECTED:
             pass
@@ -201,10 +237,16 @@ class MainApp(App):
             self.notify("Error: No file is selected.", severity="error")
     def action_debug(self) -> None:
         self.notify("Selected: {}\nClipboard: {}\nClipboard Mode: {}".format(SELECTED if SELECTED else "None", CLIPBD if CLIPBD else "None", CLIPBD_MODE))
+
+
     def action_filter(self) -> None:
         self.mount(FilterBox())
+
+
     def action_help(self):
         self.notify(helpMessage())
+
+
     def action_refresh(self):
         self.ltDir.reload() 
         self.screen.refresh()
